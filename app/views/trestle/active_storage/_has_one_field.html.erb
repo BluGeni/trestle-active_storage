@@ -2,9 +2,11 @@
   <% if attachment.attached? && builder.object.persisted? %>
     <div class="active-storage__preview">
       <% if attachment.previewable? %>
-        <%= image_tag(attachment.representation(resize_to_limit: [70, 70]), class: "active-storage__image") %>
+        <%= link_to image_tag(main_app.url_for(attachment.preview(resize: "300x300>")), class: "active-storage__image"),
+                    main_app.rails_blob_path(attachment, disposition: "attachment") %>
       <% elsif attachment.variable? %>
-        <%= image_tag(attachment), class: "active-storage__image") %>
+        <%= link_to image_tag(main_app.url_for(attachment.variant(resize: "300x300>")), class: "active-storage__image"),
+                    main_app.rails_blob_path(attachment, disposition: "attachment") %>
       <% else %>
         <%= link_to main_app.rails_blob_path(attachment, disposition: "attachment"), class: "btn btn-info" do %>
           <i class="fa fa-download"></i>
